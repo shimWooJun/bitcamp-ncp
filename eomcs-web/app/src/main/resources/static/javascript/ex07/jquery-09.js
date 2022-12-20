@@ -6,6 +6,7 @@
 //6. on()
 //7. appendTo
 //8.Method Chaining
+//9. click()
 function jQuery(selector) {
     let el= [];
     if (selector.startsWith("<")){
@@ -69,6 +70,11 @@ function jQuery(selector) {
 
       return this;
     };
+
+    el.click = function(handler){
+      this.on('click',handler);
+      return this;
+    }
 
     return el;
   }
