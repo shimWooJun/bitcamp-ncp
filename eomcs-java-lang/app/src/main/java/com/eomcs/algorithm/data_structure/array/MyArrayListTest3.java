@@ -30,9 +30,6 @@ public class MyArrayListTest3 {
     list2.add("lll");
     print2(list2);
 
-
-
-
   }
 
   static void print(MyArrayList list) {
