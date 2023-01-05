@@ -6,7 +6,7 @@ public class Exam0434 {
 
     // 자바는 문자를 저장할 때 UCS-2에 정의된 정수 값을 저장한다.
     // 확인해 보자!
-    
+
     // 영어 대문자의 문자 코드 저장
     int v = 0x41;  // 65(10진수)
 
@@ -17,8 +17,8 @@ public class Exam0434 {
       // 문법
       //   (char) 정수
       //System.out.print(v + i);
-      System.out.print((char)(v + i));
-      System.out.print(' ');
+      System.out.println((char)(v + i));
+      //      System.out.print(' ');
     }
   }
 }
