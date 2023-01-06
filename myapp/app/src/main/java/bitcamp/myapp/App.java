@@ -11,13 +11,31 @@ public class App {
   } // main()
 
   private static void goMainMenu() {
+    // 일반 회원 목록을 저장할 메모리를 준비한다.
+    MemberHandler generalMemberHandler = new MemberHandler("일반학생");
+
+    // 국비지원 학생 목록을 저장할 메모리를 준비한다.
+    MemberHandler supportedMemberHandler = new MemberHandler("국비지원학생");
+
+    // 기업 위탁 교육생 목록을 저장할 메모리를 준비한다.
+    MemberHandler companyMemberHandler = new MemberHandler("위탁교육생");
+
     while (true) {
-      System.out.println("1. 회원관리");
+      System.out.println("1. 일반학생관리");
+      System.out.println("2. 국비지원학생관리");
+      System.out.println("3. 위탁교육생관리");
       System.out.println("9. 종료");
       int menuNo = Prompt.inputInt("메뉴> ");
 
       if (menuNo == 1) {
-        goMemberMenu();
+        generalMemberHandler.service();
+
+      } else if (menuNo == 2) {
+        supportedMemberHandler.service();
+
+      } else if (menuNo == 3) {
+        companyMemberHandler.service();
+
       } else if (menuNo == 9) {
         break;
       } else {
@@ -26,32 +44,8 @@ public class App {
     }
   }
 
-  private static void goMemberMenu() {
-    while (true) {
-      System.out.println("[회원 관리]");
-      System.out.println("1. 등록");
-      System.out.println("2. 목록");
-      System.out.println("3. 조회");
-      System.out.println("4. 변경");
-      System.out.println("5. 삭제");
-      System.out.println("0. 이전");
-      int menuNo = Prompt.inputInt("회원관리> ");
-
-      if (menuNo == 0) {
-        break;
-      } else if (menuNo == 1) {
-        MemberHandler.inputMember();
-      } else if (menuNo == 2) {
-        MemberHandler.printMembers();
-      } else if (menuNo >= 3 && menuNo <= 5) {
-        System.out.println("작업실행!");
-      } else {
-        System.out.println("잘못된 메뉴 번호 입니다.");
-      }
-    }
-  }
-
 } // class App
+
 
 
 
