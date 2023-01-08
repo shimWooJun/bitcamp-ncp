@@ -1,16 +1,16 @@
-package com.eomcs.oop.ex01;
+p ackage com.eomcs.oop.ex01;
 
 // # import - 사용 후 II
 //
 import com.eomcs.oop.ex01.sub.*;
-import java.util.*; 
+import java.util.*;
 import java.net.*;
 import java.io.*;
 
 public class Exam0730 {
   public static void main(String[] args) {
 
-    // 특정 패키지에 소속된 여러 클래스를 사용한다면 
+    // 특정 패키지에 소속된 여러 클래스를 사용한다면
     // 다음과 같이 패키지명 다음에 wildcard(*)를 지정하면 편리하다.
     // 문법:
     //      import 패키지명.*;

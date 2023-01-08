@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../frontend/css/style.css">
+  <title>코로나</title>
+</head>
+<body> 
+
+<div class="div-wrap">
+  <div class="title-wrap">
+    <div class="title"><p><span>코로나 19</span> 국내 발생 현황</p></div>
+    <div class="time"><p class="date"></p></div>
+    <button type="button" onclick="window.open('localhost:80');">약국찾기</button>
+  </div>
+
+  <div class="day-wrap">
+    <div class="daytitle"><p>일일 확진 환자</p></div>
+    <div class="daynew"><p>일일 신규 입원</p><span class="cnt_hospitalizations"></span><a>명</a></div>
+    <div class="daydan"><p>일일 재원 위중증</p><span class="cnt_severe_symptoms"></span><a>명</a></div>
+    <div class="daydie"><p>일일 사망</p><span class="cnt_deaths"></span><a>명</a></div>
+    <div class="dayconfi"><p>일일 확진자</p></div>
+    <div class="dayconficut"><span class="cnt_confirmations"></span><a>명</a></div>
+  </div>
+
+  <div class="ten-wrap">
+    <div class="tenhos"><p>10만명당 신규입원</p></div>
+    <div class="tendan"><p>10만명당 재원 위중증</p></div>
+    <div class="tendie"><p>10만명당 사망</p></div>
+    <div class="tenhoscut"><span class="rate_hospitalizations"></span><a>명</a></div>
+    <div class="tendancut"><span class="rate_severe_symptoms"></span><a>명</a></div>
+    <div class="tendiecut"><span class="rate_deaths"></span><a>명</a></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script><br>
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+<script>
+const a =500;
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our datasets
+    data: {
+        labels: ['일일 확진자', '일일 신규 입원', '일일 재원 위중증', '일일 사망'],
+        datasets: [{
+            axis: 'x',
+            label: ['일일 확진자', '일일 신규 입원', '일일 재원 위중증', '일일 사망'],
+            backgroundColor: ['red', 'blue', 'yellow', 'green'],
+            borderColor: 'black',
+            data: [a,3435,141,3242]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+      indexAxis: 'y',
+    }
+});
+</script>
+
+
+
+
+
+
+
+  
+
+
+<script src="../frontend/js/script.js"></script>
+</body>
+</html>

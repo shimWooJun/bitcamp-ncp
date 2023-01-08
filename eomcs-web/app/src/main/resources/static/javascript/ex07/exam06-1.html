@@ -4,7 +4,30 @@
 <meta charset="UTF-8">
 <title>ex07</title>
 </head>
+<style>
+.btn {
+    border: 1px solid gray;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: skyblue;
+    color: #ffff;
+    box-shadow: 1px 1px 2px 0px gray;
+}
+
+.btn:active {
+    background-color: rgb(63, 188, 238);
+    box-shadow: 0px 0px 0px 0px gray;
+}
+
+.btn:hover{
+    cursor: default;
+
+}
+
+</style>
 <body>
+<<<<<<< HEAD
 <h1>AJAX - 공공데이터오픈API 호출</h1>
 날짜: <input id="base_date" name="base_date"><br>
 <!-- 지역: <input id="Gangnam" name="Gangnam"><br> -->
@@ -12,10 +35,13 @@ x좌표: <input id="nx" name="nx"><br>
 y좌표: <input id="ny" name="ny"><br>
 <button id="btn1">요청</button><br>
 <textarea id="ta" cols="150" rows="30"></textarea>
+=======
+<h1>UI 컴포넌트를 다루는 방법 - 버튼 UI</h1>
+>>>>>>> be2aafb8a4026a5db8e78ccbf2cd68f920a81037
 
-<script>
-"use strict"
+<div class="btn">버튼</div>
 
+<<<<<<< HEAD
 var baseDate = document.querySelector("#base_date");
 var nx = document.querySelector("#nx");
 var ny = document.querySelector("#ny");
@@ -58,10 +84,7 @@ ajax({
 
 
 </script>
+=======
+>>>>>>> be2aafb8a4026a5db8e78ccbf2cd68f920a81037
 </body>
 </html>
-
-
-
-
-
