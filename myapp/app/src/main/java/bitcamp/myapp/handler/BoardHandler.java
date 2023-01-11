@@ -7,10 +7,9 @@ import bitcamp.util.Prompt;
 
 public class BoardHandler {
 
-  // 모든 인스턴스가 공유하는 데이터를 스태틱 필드로 만든다.
-  // 특히 데이터를 조회하는 용으로 사용하는 final 변수는 스태틱 필드로 만들어야 한다.
   private BoardDao boardDao = new BoardDao();
   private String title;
+
   // 인스턴스를 만들 때 프롬프트 제목을 반드시 입력하도록 강제한다.
   public BoardHandler(String title) {
     this.title = title;
@@ -72,6 +71,7 @@ public class BoardHandler {
     b.setTitle(Prompt.inputString(String.format("제목(%s)? ", old.getTitle())));
     b.setContent(Prompt.inputString(String.format("내용(%s)? ", old.getContent())));
     b.setPassword(Prompt.inputString("암호? "));
+
     if (!old.getPassword().equals(b.getPassword())) {
       System.out.println("암호가 맞지 않습니다!");
       return;
