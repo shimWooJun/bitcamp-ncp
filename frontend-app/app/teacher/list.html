@@ -7,19 +7,17 @@
   <title>Document</title>
 </head>
 <body>
-<h1>회원</h1>
-<a href="form.html">새 회원</a>
+<h1>강사</h1>
+<a href="form.html">새 강사</a>
 <table border="1">
   <thead>
     <tr>
       <th>번호</th>
       <th>이름</th>
       <th>전화</th>
-      <th>이메일</th>
-      <th>최종학력</th>
-      <th>대학교</th>
+      <th>학위</th>
       <th>전공</th>
-      <th>강사료   </th>
+      <th>시강료</th>
     </tr>
   </thead>
   <tbody>
@@ -29,33 +27,33 @@
 <script>
 var tbody = document.querySelector("tbody");
 
-function getLevelTitle(level) {
+function getDegreeTitle(level) {
   switch (level) {
-    case 0: return "학사";
-    case 1: return "석사";
-    case 2: return "박사";
+    case 1: return "고졸";
+    case 2: return "전문학사";
+    case 3: return "학사";
+    case 4: return "석사";
+    case 5: return "박사";
+    case 0: return "기타";
     default: return "";
   }
 }
 
-fetch('http://localhost:8080/instructors')
+fetch('http://localhost:8080/teachers')
   .then((response) => {return response.json();})
   .then((obj) => {
     var html = '';
-    for (var a of obj.data) {
+    for (var t of obj.data) {
       html += `<tr>
-        <td>${a.no}</td>
-        <td><a href="view.html?no=${a.no}">${a.name} </a></td>
-        <td>${a.tel}</td>
-        <td>${a.email}</td>
-        <td>${getLevelTitle(a.level)}</td>
-        <td>${a.dhk}</td>
-        <td>${a.major}</td>
-        <td>${a.pay} 원/시간</td>
+        <td>${t.no}</td>
+        <td><a href="view.html?no=${t.no}">${t.name} </a></td>
+        <td>${t.tel}</td>
+        <td>${getDegreeTitle(t.degree)}</td>
+        <td>${t.major}</td>
+        <td>${t.wage}</td>
         </tr>\n`;
     }
     tbody.innerHTML = html;
-
   })
   .catch((err) => {
     alert("서버 요청 오류!");
