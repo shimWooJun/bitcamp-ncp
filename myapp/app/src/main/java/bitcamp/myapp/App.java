@@ -1,7 +1,7 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.handler.BoardHandler;
-import bitcamp.myapp.handler.MemberHandler;
+import bitcamp.myapp.handler.StudentHandler;
 import bitcamp.util.Prompt;
 
 public class App {
@@ -16,13 +16,13 @@ public class App {
 
   private static void goMainMenu() {
     // 일반 학생 목록을 저장할 메모리를 준비한다.
-    MemberHandler generalMemberHandler = new MemberHandler("일반학생");
+    StudentHandler generalMemberHandler = new StudentHandler("일반학생");
 
     // 국비지원 학생 목록을 저장할 메모리를 준비한다.
-    MemberHandler supportedMemberHandler = new MemberHandler("국비지원학생");
+    StudentHandler supportedMemberHandler = new StudentHandler("국비지원학생");
 
     // 기업 위탁 교육생 목록을 저장할 메모리를 준비한다.
-    MemberHandler companyMemberHandler = new MemberHandler("위탁교육생");
+    StudentHandler companyMemberHandler = new StudentHandler("위탁교육생");
 
     // 게시글 목록을 저장할 메모리를 준비한다.
     BoardHandler boardHandler = new BoardHandler("게시판");
