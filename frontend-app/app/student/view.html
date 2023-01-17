@@ -151,7 +151,7 @@ document.querySelector('#update-btn').onclick = (e) => {
 };
 
 document.querySelector('#delete-btn').onclick = (e) => {
-  fetch(`http://localhost:8080/students/${no}`, {
+  fetch(`http://localhost:8080/reviews/${no}`, {
     method: 'DELETE'
   })
   .then((response) => response.json())

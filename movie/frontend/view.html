@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h1>영화 정보</h1>
+<a href="form.html">영화 등록</a>
+<table border="1">
+  <thead>
+    <tr>
+        <th>영화</th>
+        <th>개봉일</th>
+        <th>소개</th>
+        <th>장르</th>
+        <th>국가</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+var tbody = document.querySelector("tbody");
+
+fetch('http://localhost:8080/reviews')
+  .then((response) => {return response.json();})
+  .then((obj) => {
+    var html = '';
+    for (var b of obj.data) {
+      html += `<tr>
+        <td>${b.no}</td>
+        <td><a href="view.html?no=${b.no}">${b.name} </a></td>
+        <td>${b.openD}</td>
+        <td>${b.report}</td>
+        <td>${b.genre}</td>
+        <td>${b.country}</td>
+        </tr>\n`;
+    }
+    tbody.innerHTML = html;
+  })
+  .catch((err) => {
+    alert("서버 요청 오류!");
+    console.log(err);
+  });  
+</script>
+</body>
+</html>

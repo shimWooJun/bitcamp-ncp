@@ -6,6 +6,10 @@ public class Car {
   public String maker;
   public int capacity;
 
+  public boolean sunloof;
+  public boolean auto;
+  public boolean accel;
+
   public Car() {}
 
   public Car(String model, String maker, int capacity) {

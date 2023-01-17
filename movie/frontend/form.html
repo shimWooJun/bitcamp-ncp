@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h1>영화</h1>
+<form>
+<table border="1">
+  <tbody>
+    <tr>
+        <th>포스터 이미지 넣기</th>
+        <td><input type="text" name="no" id="f-no"></td>
+      </tr>
+    <tr>
+      <th>영화제목</th>
+      <td><input type="text" name="name" id="f-name"></td>
+    </tr>
+    <tr>
+      <th>소개</th>
+      <td><input type="text" name="report" id="f-report"></td>
+    </tr>
+    <tr>
+      <th>개봉일</th>
+      <td><input type="text" name="openD" id="f-openD"></td>
+    </tr>
+    <tr>
+      <th>장르</th>
+      <td>
+        <select name="genre" id="f-genre">
+          <option value="1">모험</option>
+          <option value="2">판타지</option>
+          <option value="3" selected>액션</option>
+          <option value="4">애니메이션</option>
+          <option value="5">스릴러</option>
+          <option value="0">SF</option>
+        </select>
+      </td>
+    </tr>
+    <!-- <tr>
+      <th>평점</th>
+      <td><input type="text" name="school" id="f-school"></td>
+    </tr> -->
+    <tr>
+      <th>국가</th>
+      <td><input type="text" name="country" id="f-country"></td>
+    </tr>
+    <!-- <tr>
+      <th>배급</th>
+      <td><input type="text" name="" id="f-wage"></td>
+    </tr> -->
+  </tbody>
+</table>
+<button id="add-btn" type="button">등록</button>
+<button id="cancel-btn" type="button">취소</button>
+</form>
+
+<script>
+document.querySelector('#add-btn').onclick = (e) => {
+  var name = encodeURIComponent(document.querySelector('#f-no').value);
+  var tel = document.querySelector('#f-name').value;
+  var email = document.querySelector('#f-report').value;
+  var degree = document.querySelector('#f-openD').value;
+  var school = encodeURIComponent(document.querySelector('#f-genre').value);
+  var major = encodeURIComponent(document.querySelector('#f-country').value);
+
+  // console.log(`name=${name}&tel=${tel}&email=${email}&degree=${degree}&school=${school}` +
+  //   `&major=${major}&wage=${wage}`);
+
+  fetch('http://localhost:8080/teachers', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+    },
+    body: `no=${no}&name=${name}&report=${report}&openD=${openD}&genre=${genre}` +
+      `&country=${country}`
+  })
+  .then((response) => {return response.json();})
+  .then((obj) => {
+    location.href = "list.html";
+  })
+  .catch((err) => {
+    alert("서버 요청 오류!");
+    console.log(err);
+  });
+};
+
+document.querySelector('#cancel-btn').onclick = (e) => {
+  location.href = "list.html";
+};
+
+</script>
+</body>
+</html>
