@@ -118,7 +118,7 @@ public class BoardHandler {
     String keyword = Prompt.inputString("검색어? ");
     System.out.println("번호\t제목\t작성일\t조회수");
     for (Object obj : boards) {
-      Board b =(Board) obj;
+      Board b = (Board) obj;
       if (b.getTitle().indexOf(keyword) != -1 ||
           b.getContent().indexOf(keyword) != -1) {
         System.out.printf("%d\t%s\t%s\t%d\n",

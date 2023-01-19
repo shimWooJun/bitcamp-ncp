@@ -3,7 +3,7 @@ package bitcamp.myapp.dao;
 import java.sql.Date;
 import bitcamp.myapp.vo.Student;
 
-public class StudentDao extends ObjectDao{
+public class StudentDao extends ObjectDao {
 
   int lastNo;
 
@@ -16,7 +16,7 @@ public class StudentDao extends ObjectDao{
   @Override
   protected int indexOf(Object obj) {
     for (int i = 0; i < this.size(); i++) {
-      if (((Student)this.objects[i]).getNo() == ((Student) obj).getNo()) {
+      if (((Student) this.get(i)).getNo() == ((Student) obj).getNo()) {
         return i;
       }
     }
@@ -29,7 +29,7 @@ public class StudentDao extends ObjectDao{
     s.setNo(++lastNo);
     s.setCreatedDate(new Date(System.currentTimeMillis()).toString());
 
-    super.update(object);
+    super.insert(object);
   }
 }
 
