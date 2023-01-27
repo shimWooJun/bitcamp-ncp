@@ -1,11 +1,13 @@
 package bitcamp.util;
 
-public abstract class AbstractList implements List {
+//
+
+public abstract class AbstractList<E> implements List<E> {
 
   protected int size;
 
   @Override
-  public Object get(int index) {
+  public E get(int index) {
     if (index < 0 || index >= this.size) {
       throw new IndexOutOfBoundsException("인덱스가 무효합니다.");
     }
@@ -25,17 +27,17 @@ public abstract class AbstractList implements List {
   // => anonymous class = 클래스 정의 + 객체 생성 코드
 
   @Override
-  public Iterator iterator(){
+  public Iterator<E> iterator(){
 
     // => return 문 + anonymous class
-    return new Iterator(){
+    return new Iterator<E>(){
       int cursor;
       @Override
       public boolean hasNext() {
         return cursor >= 0 && cursor < AbstractList.this.size();
       }
       @Override
-      public Object next() {
+      public E next() {
         return AbstractList.this.get(cursor++);
       }
 

@@ -36,6 +36,13 @@ public class Exam0450 {
     };
   }
 
+  static A create22() {
+    return () -> System.out.println("Hello2!");
+  }
+
+
+
+
   static A create3() {
     return () -> System.out.println("Hello3!");
   }
