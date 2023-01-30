@@ -2,7 +2,6 @@
 package com.eomcs.oop.ex12;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class Exam0920 {
 
@@ -14,12 +13,6 @@ public class Exam0920 {
     names.add("김구");
     names.add("안중근");
 
-    class MyConsumer<T> implements Consumer<T> {
-      @Override
-      public void accept(T item) {
-        System.out.println(item);
-      }
-    }
-    names.forEach(new MyConsumer<String>());
+    names.forEach((String item) -> System.out.println(item));
   }
 }
