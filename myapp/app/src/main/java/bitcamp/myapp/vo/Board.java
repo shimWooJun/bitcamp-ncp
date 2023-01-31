@@ -2,14 +2,16 @@ package bitcamp.myapp.vo;
 
 import java.util.Objects;
 
-public class Board {
+public class Board implements java.io.Serializable {
+
+  private static final long serialVersionUID = 1L;
+
   private int no;
   private String title;
   private String content;
   private String password;
   private String createdDate;
   private int viewCount;
-
 
   @Override
   public String toString() {

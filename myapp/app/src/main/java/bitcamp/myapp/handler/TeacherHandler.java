@@ -1,13 +1,13 @@
 package bitcamp.myapp.handler;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import bitcamp.myapp.dao.TeacherDao;
 import bitcamp.myapp.vo.Teacher;
 import bitcamp.util.Prompt;
 
 public class TeacherHandler {
 
-  private TeacherDao teacherDao = new TeacherDao(new LinkedList<Teacher>());
+  private TeacherDao teacherDao = new TeacherDao(new ArrayList<Teacher>());
   private String title;
 
   public TeacherHandler(String title) {
@@ -130,7 +130,7 @@ public class TeacherHandler {
 
   public void service() {
 
-    teacherDao.load("Teacher.data");
+    teacherDao.load("teacher.data");
 
     while (true) {
       System.out.printf("[%s]\n", this.title);

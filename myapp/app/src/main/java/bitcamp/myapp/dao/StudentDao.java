@@ -2,12 +2,12 @@ package bitcamp.myapp.dao;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import bitcamp.myapp.vo.Student;
-import bitcamp.util.BinaryDecoder;
-import bitcamp.util.BinaryEncoder;
 
 public class StudentDao {
 
@@ -55,59 +55,23 @@ public class StudentDao {
     return list.remove(s);
   }
   public void save(String filename) {
-    try (
-        // 1) 바이너리 데이터(바이트배열)를 출력할 도구를 준비한다.
-        FileOutputStream out = new FileOutputStream(filename)){
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){
 
-      // 2) 게시글 개수를 출력 : 4byte
-      out.write(BinaryEncoder.write(list.size()));
-
-      //3 ) 게시글 출력
-      // 목록에서 Board 객체를 꺼내 바이트 배열로 만든 다음 출력한다.
-
-      for(Student s : list) {
-        out.write(BinaryEncoder.write(s.getNo()));
-        out.write(BinaryEncoder.write(s.getPostNo()));
-        out.write(BinaryEncoder.write(s.getBasicAddress()));
-        out.write(BinaryEncoder.write(s.getDetailAddress()));
-        out.write(BinaryEncoder.write(s.getWorking()));
-        out.write(BinaryEncoder.write(s.getGender()));
-        out.write(BinaryEncoder.write(s.getLevel()));
-        out.write(BinaryEncoder.write(s.getCreatedDate()));
-      }
+      out.writeObject(list);
 
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
+  @SuppressWarnings("unchecked")
   public void load(String filename) {
     if(list.size() > 0) { // 중복 로딩 방지!
       return;
     }
-    try (
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
 
-        // 1) 바이너리 데이터를 읽을 도구 준비
-        FileInputStream in = new FileInputStream(filename)) {
+      list = (List<Student>) in.readObject();
 
-      // 2) 저장된 게시글 개수를 읽는다: 4byte
-      int size = BinaryDecoder.readInt(in);
-
-      // 3) 게시글 개수 만큼 반복해서 데이터를 읽어 Board 객체에 저장한다.
-      for(int i = 0; i < size; i++) {
-        // 4) 바이너리 데이터를 저장한 순서대로 읽어서 Board 객체에 담는다.
-        Student s = new Student();
-        s.setNo(BinaryDecoder.readInt(in));
-        s.setPostNo(BinaryDecoder.readString(in));
-        s.setBasicAddress(BinaryDecoder.readString(in));
-        s.setDetailAddress(BinaryDecoder.readString(in));
-        s.setWorking(BinaryDecoder.readBoolean(in));
-        s.setGender(BinaryDecoder.readChar(in));
-        s.setLevel(BinaryDecoder.readByte(in));
-        s.setCreatedDate(BinaryDecoder.readString(in));
-
-        // 5) Board 객체를 목록에 추가한다.
-        list.add(s);
-      }
       if(list.size() > 0) {
         lastNo = list.get(list.size() -1).getNo();
       }
