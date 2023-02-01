@@ -1,12 +1,13 @@
 package bitcamp.myapp.dao;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import bitcamp.myapp.vo.Student;
 
 public class StudentDao {
@@ -54,32 +55,37 @@ public class StudentDao {
   public boolean delete(Student s) {
     return list.remove(s);
   }
-  public void save(String filename) {
-    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){
 
-      out.writeObject(list);
+  public void save(String filename) {
+    try (FileWriter out = new FileWriter(filename)) {
+
+      out.write(new Gson().toJson(list));
 
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-  @SuppressWarnings("unchecked")
+
   public void load(String filename) {
-    if(list.size() > 0) { // 중복 로딩 방지!
+    if (list.size() > 0) { // 중복 로딩 방지!
       return;
     }
-    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
 
-      list = (List<Student>) in.readObject();
+    try (BufferedReader in = new BufferedReader(new FileReader(filename))) {
 
-      if(list.size() > 0) {
-        lastNo = list.get(list.size() -1).getNo();
+      TypeToken<List<Student>> collectionType = new TypeToken<>() {};
+
+      list = new Gson().fromJson(in, collectionType);
+
+      if (list.size() > 0) {
+        lastNo = list.get(list.size() - 1).getNo();
       }
 
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
+
 }
 
 

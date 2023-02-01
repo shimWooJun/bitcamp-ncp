@@ -1,7 +1,6 @@
 package bitcamp.myapp.vo;
 
-public class Teacher extends Member implements java.io.Serializable{
-
+public class Teacher extends Member implements java.io.Serializable {
   private static final long serialVersionUID = 1L;
 
   private String email;
@@ -9,6 +8,40 @@ public class Teacher extends Member implements java.io.Serializable{
   private String school;
   private String major;
   private int wage;
+
+  public static Teacher creat(String csv) {
+    try {
+      String[] values = csv.split(",");
+
+      Teacher obj = new Teacher();
+      obj.setNo(Integer.parseInt(values[0]));
+      obj.setName(values[1]);
+      obj.setTel(values[2]);
+      obj.setCreatedDate(values[3]);
+      obj.setEmail(values[4]);
+      obj.setDegree(Integer.parseInt(values[5]));
+      obj.setSchool(values[6]);
+      obj.setMajor(values[7]);
+      obj.setWage(Integer.parseInt(values[8]));
+
+      return obj;
+    }catch (Exception e) {
+      throw new RuntimeException("Teacher 객체 생성 오류!", e);
+    }
+  }
+
+  public String toCsvString() {
+    return String.format("%d,%s,%s,%s,%s,%d,%s,%s,%d",
+        getNo(),
+        getName(),
+        getTel(),
+        getCreatedDate(),
+        getEmail(),
+        getDegree(),
+        getSchool(),
+        getMajor(),
+        getWage());
+  }
 
   public String getEmail() {
     return email;
