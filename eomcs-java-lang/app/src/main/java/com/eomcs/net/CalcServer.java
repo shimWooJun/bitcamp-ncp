@@ -29,28 +29,14 @@ public class CalcServer {
       System.out.println(message3);
 
       int result = 0;
-      // if (message2 == '+') {
-      // result = message + message3;
-      // } else if(message2 == '-') {
-      // result = message - message3;
-      // } else if(message2 == '*') {
-      // result = message * message3;
-      // } else if(message == '/') {
-      // result = message / message3;
-      // }
-      switch (message2) {
-        case '+':
-          result = message + message3;
-          break;
-        case '-':
-          result = message - message3;
-          break;
-        case '*':
-          result = message * message3;
-          break;
-        case '/':
-          result = message / message3;
-          break;
+      if (message2 == '+') {
+        result = message + message3;
+      } else if (message2 == '-') {
+        result = message - message3;
+      } else if (message2 == '*') {
+        result = message * message3;
+      } else if (message2 == '/') {
+        result = message / message3;
       }
 
       out.println(result);

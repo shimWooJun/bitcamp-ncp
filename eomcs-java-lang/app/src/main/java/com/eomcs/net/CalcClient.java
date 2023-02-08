@@ -9,7 +9,7 @@ public class CalcClient {
     Scanner keyScan = new Scanner(System.in);
     System.out.println("클라이언트 실행중...");
 
-    Socket socket = new Socket("192.168.1.2", 8888);
+    Socket socket = new Socket("192.168.0.19", 8888);
     System.out.println("서버에 연결되었음!");
 
     PrintStream out = new PrintStream(socket.getOutputStream());
@@ -28,9 +28,6 @@ public class CalcClient {
           System.out.print("연산자>");
           char message2 = keyScan.next().charAt(0);
           out.println(message2);
-          // if (message2 == 'n') {
-          // break;
-          // }
           System.out.print("값>");
           int message3 = keyScan.nextInt();
           out.println(message3);
