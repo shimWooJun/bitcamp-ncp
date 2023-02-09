@@ -1,9 +1,9 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.dao.DaoStub;
-import bitcamp.myapp.dao.NetworkBoardDao;
-import bitcamp.myapp.dao.NetworkStudentDao;
-import bitcamp.myapp.dao.NetworkTeacherDao;
+import bitcamp.myapp.dao.JdbcBoardDao;
+import bitcamp.myapp.dao.JdbcStudentDao;
+import bitcamp.myapp.dao.JdbcTeacherDao;
 import bitcamp.myapp.handler.BoardHandler;
 import bitcamp.myapp.handler.StudentHandler;
 import bitcamp.myapp.handler.TeacherHandler;
@@ -18,9 +18,9 @@ public class ClientApp {
   void execute(String ip, int port) {
     try {
       DaoStub daoStub = new DaoStub(ip, port);
-      NetworkBoardDao boardDao = new NetworkBoardDao(daoStub);
-      NetworkStudentDao studentDao = new NetworkStudentDao(daoStub);
-      NetworkTeacherDao teacherDao = new NetworkTeacherDao(daoStub);
+      JdbcBoardDao boardDao = new JdbcBoardDao();
+      JdbcStudentDao studentDao = new JdbcStudentDao();
+      JdbcTeacherDao teacherDao = new JdbcTeacherDao();
 
       StudentHandler studentHandler = new StudentHandler("학생", studentDao);
       TeacherHandler teacherHandler = new TeacherHandler("강사", teacherDao);
@@ -57,8 +57,7 @@ public class ClientApp {
               System.out.println("잘못된 메뉴 번호 입니다.");
           }
         } catch (Exception e) {
-          System.out.printf("명령 실행 중 오류 발생! - %s : %s\n",
-              e.getMessage(),
+          System.out.printf("명령 실행 중 오류 발생! - %s : %s\n", e.getMessage(),
               e.getClass().getSimpleName());
         }
       }
@@ -73,12 +72,5 @@ public class ClientApp {
     }
   }
 }
-
-
-
-
-
-
-
 
 
