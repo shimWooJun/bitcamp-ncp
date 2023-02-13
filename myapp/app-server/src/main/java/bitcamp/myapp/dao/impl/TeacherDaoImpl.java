@@ -1,17 +1,19 @@
-package bitcamp.myapp.dao;
+package bitcamp.myapp.dao.impl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import bitcamp.myapp.dao.DaoException;
+import bitcamp.myapp.dao.TeacherDao;
 import bitcamp.myapp.vo.Teacher;
 
-public class JdbcTeacherDao implements TeacherDao {
+public class TeacherDaoImpl implements TeacherDao {
 
   Connection con;
 
   // 의존객체 Connection 을 생성자에서 받는다.
-  public JdbcTeacherDao(Connection con) {
+  public TeacherDaoImpl(Connection con) {
     this.con = con;
   }
 

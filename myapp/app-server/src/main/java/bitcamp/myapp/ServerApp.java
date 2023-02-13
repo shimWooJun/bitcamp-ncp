@@ -6,9 +6,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import bitcamp.myapp.dao.JdbcBoardDao;
-import bitcamp.myapp.dao.JdbcStudentDao;
-import bitcamp.myapp.dao.JdbcTeacherDao;
+import bitcamp.myapp.dao.impl.BoardDaoImpl;
+import bitcamp.myapp.dao.impl.TeacherDaoImpl;
+import bitcamp.myapp.dao.impl.MemberDaoImpl;
+import bitcamp.myapp.dao.impl.StudentDaoImpl;
 import bitcamp.myapp.handler.BoardHandler;
 import bitcamp.myapp.handler.HelloHandler;
 import bitcamp.myapp.handler.StudentHandler;
@@ -32,22 +33,24 @@ public class ServerApp {
     }
   }
 
-  public ServerApp() throws Exception {
-    this.con =
-        DriverManager.getConnection("jdbc:mariadb://localhost:3306/studydb", "study", "1111");
+  public ServerApp() throws Exception{
+    this.con = DriverManager.getConnection(
+        "jdbc:mariadb://localhost:3306/studydb", "study", "1111");
 
-    JdbcBoardDao boardDao = new JdbcBoardDao(con);
-    JdbcStudentDao studentDao = new JdbcStudentDao(con);
-    JdbcTeacherDao teacherDao = new JdbcTeacherDao(con);
+    BoardDaoImpl boardDao = new BoardDaoImpl(con);
+    MemberDaoImpl memberDao = new MemberDaoImpl(con);
+    StudentDaoImpl studentDao = new StudentDaoImpl(con);
+    TeacherDaoImpl teacherDao = new TeacherDaoImpl(con);
 
-    this.studentHandler = new StudentHandler("학생", studentDao);
+    this.studentHandler = new StudentHandler("학생", con, memberDao, studentDao);
     this.teacherHandler = new TeacherHandler("강사", teacherDao);
     this.boardHandler = new BoardHandler("게시판", boardDao);
   }
 
   void execute(int port) {
 
-    try (Connection con = this.con; ServerSocket serverSocket = new ServerSocket(port)) {
+    try (Connection con = this.con;
+        ServerSocket serverSocket = new ServerSocket(port)) {
       System.out.println("서버 실행 중...");
 
       try (Socket socket = serverSocket.accept();
@@ -77,8 +80,12 @@ public class ServerApp {
   }
 
   private void hello(StreamTool streamTool) throws Exception {
-    streamTool.println("비트캠프 관리 시스템").println("  Copyright by 네이버클라우드1기")
-        .println("--------------------------------------").println("안녕하세요!").println().send();
+    streamTool.println("비트캠프 관리 시스템")
+    .println("  Copyright by 네이버클라우드1기")
+    .println("--------------------------------------")
+    .println("안녕하세요!")
+    .println()
+    .send();
   }
 
   private void processRequest(StreamTool streamTool) throws Exception {
@@ -122,9 +129,9 @@ public class ServerApp {
 
 
       } catch (Exception e) {
-        streamTool
-            .printf("명령 실행 중 오류 발생! - %s : %s\n", e.getMessage(), e.getClass().getSimpleName())
-            .send();
+        streamTool.printf("명령 실행 중 오류 발생! - %s : %s\n",
+            e.getMessage(),
+            e.getClass().getSimpleName()).send();
       }
     }
 
@@ -134,9 +141,21 @@ public class ServerApp {
   }
 
   void menu(StreamTool streamTool) throws Exception {
-    streamTool.println("1. 학생관리").println("2. 강사관리").println("3. 게시판").println("4. 인사")
-        .println("9. 종료").println("메뉴 번호:").send();
+    streamTool.println("1. 학생관리")
+    .println("2. 강사관리")
+    .println("3. 게시판")
+    .println("4. 인사")
+    .println("9. 종료")
+    .println("메뉴 번호:")
+    .send();
   }
 }
+
+
+
+
+
+
+
 
 
