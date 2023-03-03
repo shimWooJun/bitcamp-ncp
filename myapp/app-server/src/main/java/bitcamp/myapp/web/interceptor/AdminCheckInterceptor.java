@@ -10,7 +10,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-    if (loginUser.getEmail().equals("admin@test.com")) {
+    if (!loginUser.getEmail().equals("admin@test.com")) {
       response.sendRedirect(request.getContextPath() + "/app/auth/form");
       return false;
     }
