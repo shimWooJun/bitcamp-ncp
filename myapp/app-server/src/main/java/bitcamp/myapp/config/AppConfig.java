@@ -1,69 +1,67 @@
 package bitcamp.myapp.config;
 
-import java.io.InputStream;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.BoardFileDao;
-import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.dao.StudentDao;
-import bitcamp.myapp.dao.TeacherDao;
-import bitcamp.util.BitcampSqlSessionFactory;
-import bitcamp.util.DaoGenerator;
-import bitcamp.util.TransactionManager;
+import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
+import bitcamp.myapp.controller.StudentController;
+import bitcamp.myapp.controller.TeacherController;
+import bitcamp.myapp.web.interceptor.AuthInterceptor;
 
-@Configuration
+//@Configuration
 
-// Spring IoC 컨테이너가 자동 생성할 클래스를 찾을 수 있도록 패키지를 지정한다.
-@ComponentScan("bitcamp.myapp")
+@ComponentScan(
+    value = "bitcamp.myapp.controller",
+    excludeFilters = {
+        @Filter(
+            type = FilterType.ASSIGNABLE_TYPE,
+            classes = {StudentController.class, TeacherController.class})
+    })
 
-public class AppConfig {
+// WebMVC 관련 설정을 처리하고 싶다면 다음 애노테이션을 추가하라!
+// => WebMVC 관련 설정을 수행하는 클래스를 정의했으니,
+//    WebMvcConfigurer 구현체를 찾아
+//    해당 인터페이스에 정의된대로 메서드를 호출하여
+//    설정을 수행하라는 의미다!
+@EnableWebMvc
+public class AppConfig implements WebMvcConfigurer {
 
-  @Bean
-  public SqlSessionFactory sqlSessionFactory() throws Exception {
-    System.out.println("SqlSessionFactory 객체 생성!");
-    InputStream mybatisConfigInputStream = Resources.getResourceAsStream(
-        "bitcamp/myapp/config/mybatis-config.xml");
-    SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-    return new BitcampSqlSessionFactory(
-        builder.build(mybatisConfigInputStream));
+  {
+    System.out.println("AppConfig 생성됨!");
   }
 
   @Bean
-  public TransactionManager transactionManager(SqlSessionFactory sqlSessionFactory) throws Exception {
-    System.out.println("TransactionManager 객체 생성! ");
-    return new TransactionManager((BitcampSqlSessionFactory) sqlSessionFactory);
+  public MultipartResolver multipartResolver() {
+    return new StandardServletMultipartResolver();
   }
 
   @Bean
-  public BoardDao boardDao(SqlSessionFactory sqlSessionFactory) {
-    return new DaoGenerator(sqlSessionFactory).getObject(BoardDao.class);
+  public ViewResolver viewResolver() {
+    // 페이지 컨트롤러가 jsp 경로를 리턴하면
+    // viewResolver가 그 경로를 가지고 최종 jsp 경로를 계산한 다음에
+    // JstlView를 통해 실행한다.
+    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    viewResolver.setViewClass(JstlView.class);
+    viewResolver.setPrefix("/WEB-INF/jsp/");
+    viewResolver.setSuffix(".jsp");
+    return viewResolver;
   }
 
-  @Bean
-  public MemberDao memberDao(SqlSessionFactory sqlSessionFactory) {
-    return new DaoGenerator(sqlSessionFactory).getObject(MemberDao.class);
+  // WebMvcConfigurer 규칙에 맞춰 인터셉터를 등록한다.
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    System.out.println("AppConfig.addInterceptors() 호출됨!");
+    registry.addInterceptor(
+        new AuthInterceptor()).addPathPatterns("/**/*insert", "/**/*update", "/**/*delete");
   }
-
-  @Bean
-  public StudentDao studentDao(SqlSessionFactory sqlSessionFactory) {
-    return new DaoGenerator(sqlSessionFactory).getObject(StudentDao.class);
-  }
-
-  @Bean
-  public TeacherDao teacherDao(SqlSessionFactory sqlSessionFactory) {
-    return new DaoGenerator(sqlSessionFactory).getObject(TeacherDao.class);
-  }
-
-  @Bean
-  public BoardFileDao boardFileDao(SqlSessionFactory sqlSessionFactory) {
-    return new DaoGenerator(sqlSessionFactory).getObject(BoardFileDao.class);
-  }
-
 }
 
 
