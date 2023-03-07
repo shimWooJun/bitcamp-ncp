@@ -25,12 +25,7 @@ public class TeacherController {
 
   @PostMapping("insert")
   public void insert(Teacher teacher, Model model) {
-    try {
-      teacherService.add(teacher);
-    } catch (Exception e) {
-      e.printStackTrace();
-      model.addAttribute("error", "other");
-    }
+    teacherService.add(teacher);
   }
 
   @GetMapping("list")
@@ -45,22 +40,12 @@ public class TeacherController {
 
   @PostMapping("update")
   public void update(Teacher teacher, Model model) {
-    try {
-      teacherService.update(teacher);
-    } catch (Exception e) {
-      e.printStackTrace();
-      model.addAttribute("error", "other");
-    }
+    teacherService.update(teacher);
   }
 
   @PostMapping("delete")
   public void delete(int no, Model model) {
-    try {
-      teacherService.delete(no);
-    } catch (Exception e) {
-      e.printStackTrace();
-      model.addAttribute("error", "other");
-    }
+    teacherService.delete(no);
   }
 
 }
