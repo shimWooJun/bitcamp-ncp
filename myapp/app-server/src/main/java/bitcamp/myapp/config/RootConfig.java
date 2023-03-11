@@ -66,6 +66,10 @@ public class RootConfig {
   @Bean
   public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ApplicationContext appCtx) throws Exception {
     log.trace("SqlSessionFactory 객체 생성!");
+
+    // Mybatis 로깅 기능을 활성화시킨다.
+    org.apache.ibatis.logging.LogFactory.useLog4J2Logging();
+
     SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
     factoryBean.setDataSource(dataSource);
     factoryBean.setTypeAliasesPackage("bitcamp.myapp.vo");

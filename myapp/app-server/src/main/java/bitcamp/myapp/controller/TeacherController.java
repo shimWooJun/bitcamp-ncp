@@ -1,5 +1,7 @@
 package bitcamp.myapp.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,10 @@ import bitcamp.myapp.vo.Teacher;
 @RequestMapping("/teacher")
 public class TeacherController {
 
+  Logger log = LogManager.getLogger(getClass());
+
   {
-    System.out.println("TeacherController 생성됨!");
+    log.trace("TeacherController 생성됨!");
   }
 
   @Autowired private TeacherService teacherService;

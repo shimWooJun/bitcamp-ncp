@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,10 @@ import bitcamp.myapp.vo.BoardFile;
 @Controller
 public class DownloadController {
 
+  Logger log = LogManager.getLogger(getClass());
+
   {
-    System.out.println("DownloadController 생성됨!");
+    log.trace("DownloadController 생성됨!");
   }
 
   @Autowired private BoardService boardService;
