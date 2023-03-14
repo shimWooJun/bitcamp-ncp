@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +22,17 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.ErrorCode;
 import bitcamp.util.RestResult;
 import bitcamp.util.RestStatus;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/boards")
 public class BoardController {
+
+  // 입력: POST   => /boards
+  // 목록: GET    => /boards
+  // 조회: GET    => /boards/{no}
+  // 변경: PUT    => /boards/{no}
+  // 삭제: DELETE => /boards/{no}
 
   Logger log = LogManager.getLogger(getClass());
 
@@ -35,7 +40,6 @@ public class BoardController {
     log.trace("BoardController 생성됨!");
   }
 
-  @Autowired private ServletContext servletContext;
   @Autowired private BoardService boardService;
 
   @PostMapping
@@ -57,7 +61,7 @@ public class BoardController {
       }
 
       String filename = UUID.randomUUID().toString();
-      file.transferTo(new File(servletContext.getRealPath("/board/upload/" + filename)));
+      file.transferTo(new File(System.getProperty("user.home") + "/webapp-upload/" + filename));
 
       BoardFile boardFile = new BoardFile();
       boardFile.setOriginalFilename(file.getOriginalFilename());
@@ -100,13 +104,18 @@ public class BoardController {
     }
   }
 
-  @PutMapping
+  @PutMapping("{no}")
   public Object update(
+      @PathVariable int no,
       Board board,
       List<MultipartFile> files,
       HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
+
+    // URL 의 번호와 요청 파라미터의 번호가 다를 경우를 방지하기 위해
+    // URL의 번호를 게시글 번호로 설정한다.
+    board.setNo(no);
 
     Board old = boardService.get(board.getNo());
     if (old.getWriter().getNo() != loginUser.getNo()) {
@@ -123,7 +132,7 @@ public class BoardController {
       }
 
       String filename = UUID.randomUUID().toString();
-      file.transferTo(new File(servletContext.getRealPath("/board/upload/" + filename)));
+      file.transferTo(new File(System.getProperty("user.home") + "/webapp-upload/" + filename));
 
       BoardFile boardFile = new BoardFile();
       boardFile.setOriginalFilename(file.getOriginalFilename());
