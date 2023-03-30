@@ -1,0 +1,213 @@
+/* 전체 스타일 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+/* 헤더 스타일 */
+header {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 24px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav li {
+  margin-right: 16px;
+}
+
+#home {
+  margin-right: 300px;
+}
+
+#login {
+  margin-left: 300px;
+}
+
+nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: #eee;
+}
+
+
+
+/* 메인 스타일 */
+.hero {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(image/fountain-g4abcac63a_1920.jpg);
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero button {
+  background-color: #4242423a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+
+}
+
+.event h2,
+.festival h2 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.event-list,
+.festival-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.event-item,
+.festival-item {
+  flex-basis: calc(33.33% - 16px);
+  margin-bottom: 32px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.event-item img,
+.festival-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.event-item h3,
+.festival-item h3 {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 16px;
+}
+
+.event-item p,
+.festival-item p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 16px;
+}
+
+.event-item button,
+.festival-item button {
+  background-color: #007aff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin: 16px;
+}
+
+/* 푸터 스타일 */
+footer {
+  background-color: #f5f5f5;
+  padding: 32px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+footer p {
+  margin-bottom: 16px;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* 반응형 스타일 */
+@media only screen and (max-width: 768px) {
+  nav {
+    padding: 16px;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  nav li {
+    margin-right: 8px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .event-list,
+  .festival-list {
+    justify-content: center;
+  }
+
+  .event-item,
+  .festival-item {
+    flex-basis: calc(50% - 16px);
+  }
+}
